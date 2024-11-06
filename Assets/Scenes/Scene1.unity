@@ -1676,7 +1676,7 @@ GameObject:
   - component: {fileID: 1404254147}
   - component: {fileID: 1404254146}
   m_Layer: 0
-  m_Name: Wall3 (2)
+  m_Name: Wall5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2285,7 +2285,7 @@ GameObject:
   - component: {fileID: 1938540100}
   - component: {fileID: 1938540099}
   m_Layer: 0
-  m_Name: Wall3 (1)
+  m_Name: Wall4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
