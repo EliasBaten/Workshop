@@ -17,11 +17,11 @@ public class PlatformerMovement : MonoBehaviour
 {
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float jumpForce = 10f;
-    // [SerializeField] private float gravityMultiplier = 1;    //unused
+    [SerializeField] private float deceleration = 2f;
+    
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     public bool controlEnabled { get; set; } = true; // You can edit this variable from Unity Events
-    public UnityEvent onAction2;
     
     private Vector2 moveInput;
     private Rigidbody2D rb;
@@ -30,6 +30,7 @@ public class PlatformerMovement : MonoBehaviour
     private CircleCollider2D groundCheckCollider;
     private LayerMask groundLayer = ~0; // ~0 is referring to EVERY layer. Do you want a specific layer? Serialize the variable and assign the Layer of your choice.
     private Vector2 velocity;
+    private Vector2 startPosition;
     private bool jumpInput;
     private bool jumpReleased;
     private bool wasGrounded;
@@ -44,10 +45,11 @@ public class PlatformerMovement : MonoBehaviour
         groundCheckCollider = GetComponent<CircleCollider2D>();
         groundCheckCollider.isTrigger = true;
         
-        // Set gravity scale to 0 so player won't "fall" 
         rb.gravityScale = 0;
+        
+        startPosition = transform.position;
 
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
     
     void Update()
@@ -84,10 +86,26 @@ public class PlatformerMovement : MonoBehaviour
         if (spriteRenderer)
         {
             if (moveInput.x > 0.01f)
+            {
                 spriteRenderer.flipX = false;
+                animator.SetBool("isRunning", true);
+            }
             else if (moveInput.x < -0.01f)
+            {
                 spriteRenderer.flipX = true;
+                animator.SetBool("isRunning", true);
+            }
+            else
+            {
+                animator.SetBool("isRunning", false);
+            }
         }
+
+        if (isGrounded == false)
+        {
+            animator.SetBool("isJumping", true);
+        }
+        else animator.SetBool("isJumping", false);
     }
 
     private void FixedUpdate()
@@ -125,11 +143,6 @@ public class PlatformerMovement : MonoBehaviour
             // Is Jumping upwards
             if (velocity.y > 0)
             {
-                float deceleration = 1;
-                if (jumpReleased) // shorter jump height when releasing the jump-key
-                {
-                    deceleration = 5;
-                }
                 // you can add a gravity multiplier here... but how?
                 velocity.y += Physics2D.gravity.y * deceleration * Time.deltaTime;
             }
@@ -180,12 +193,8 @@ public class PlatformerMovement : MonoBehaviour
         }
     }
 
-    public void Action2(InputAction.CallbackContext context)
+    public void PositionReset()
     {
-        if (context.started && controlEnabled)
-        {
-            Debug.Log("Action2!");
-            onAction2.Invoke();
-        }
+        transform.position = startPosition;
     }
 }

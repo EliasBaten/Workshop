@@ -17,7 +17,6 @@ public class UnityEventOnTrigger : MonoBehaviour
         {
             Debug.Log($"{gameObject} is missing a collider");
         }
-        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
