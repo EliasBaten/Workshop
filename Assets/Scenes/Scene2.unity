@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: 228236825}
   - component: {fileID: 228236824}
   - component: {fileID: 228236823}
+  - component: {fileID: 228236831}
   - component: {fileID: 228236826}
   - component: {fileID: 228236829}
   - component: {fileID: 228236830}
@@ -531,6 +532,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &228236831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228236822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ad8d6680b8f5094ab4a4eb74247e6cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2098891970}
 --- !u!1 &241012794
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,6 +1197,18 @@ MonoBehaviour:
       - m_Target: {fileID: 580314259}
         m_TargetAssemblyTypeName: DialogueTrigger, Assembly-CSharp
         m_MethodName: StartDialogue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 228236831}
+        m_TargetAssemblyTypeName: StopMovement, Assembly-CSharp
+        m_MethodName: Open
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
