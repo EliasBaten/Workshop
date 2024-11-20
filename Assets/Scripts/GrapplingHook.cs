@@ -1,10 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour
 {
-    [SerializeField] private float grappleLength;
     [SerializeField] private LayerMask grappleLayer;
     [SerializeField] private LineRenderer rope;
     [SerializeField] private Camera cam;
@@ -23,14 +23,24 @@ public class GrapplingHook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Convert mouse position to world space
+        Vector3 mouseWorldPos = cam.ScreenToWorldPoint(new Vector3(
+            Input.mousePosition.x,
+            Input.mousePosition.y,
+            cam.nearClipPlane // Use the near clipping plane distance
+        ));
+
         // Start Grapple
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 mouseWorldPos = cam.ScreenToWorldPoint(Input.mousePosition);
-            mouseWorldPos.z = 0; // Ensure the point is in 2D plane
-
+            // Calculate direction from player to mouse
             Vector2 direction = (mouseWorldPos - transform.position).normalized;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, grappleLength, grappleLayer);
+
+            // Perform raycast in the calculated direction
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, Mathf.Infinity, grappleLayer);
+
+            // Debug the ray to visualize it in the Scene view
+            Debug.DrawRay(transform.position, direction * 10, Color.red, 2f);
 
             if (hit.collider != null)
             {
@@ -58,4 +68,5 @@ public class GrapplingHook : MonoBehaviour
             rope.SetPosition(1, transform.position);
         }
     }
+
 }
